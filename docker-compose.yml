@@ -1,0 +1,18 @@
+version: '3.5'
+
+services:
+    db:
+        build:
+            dockerfile: Dockerfile.dev
+            context: ./database/
+        container_name: blackblade-db
+        command: --sql_mode=""
+        ports:
+            - '3306:3306'
+        environment:
+            - MYSQL_ROOT_PASSWORD=root
+            - MYSQL_DATABASE=blackblade
+
+networks:
+    default:
+        name: blackblade_core
