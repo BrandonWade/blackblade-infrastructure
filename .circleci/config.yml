@@ -26,18 +26,19 @@ jobs:
                       docker build -t brandonwade/blackblade-db:latest -t brandonwade/blackblade-db:$CIRCLE_SHA1 -f ./database/Dockerfile ./database
                       docker push brandonwade/blackblade-db:latest
                       docker push brandonwade/blackblade-db:$CIRCLE_SHA1
-            - run:
-                  name: 'Authenticate with GCP'
-                  command: |
-                      openssl aes-256-cbc -d -md sha256 -in service-account.json.enc -out service-account.json -pass pass:$SERVICE_ACCOUNT_ENCRYPTION_KEY
-                      gcloud auth activate-service-account --key-file=service-account.json
-                      gcloud --quiet config set project ${GCP_PROJECT_ID}
-                      gcloud --quiet config set compute/zone ${GCP_COMPUTE_ZONE}
-                      gcloud container clusters get-credentials ${GCP_CLUSTER_NAME}
+            # - run:
+            #       name: 'Authenticate with GCP'
+            #       command: |
+            #           openssl aes-256-cbc -d -md sha256 -in service-account.json.enc -out service-account.json -pass pass:$SERVICE_ACCOUNT_ENCRYPTION_KEY
+            #           gcloud auth activate-service-account --key-file=service-account.json
+            #           gcloud --quiet config set project ${GCP_PROJECT_ID}
+            #           gcloud --quiet config set compute/zone ${GCP_COMPUTE_ZONE}
+            #           gcloud container clusters get-credentials ${GCP_CLUSTER_NAME}
             - run:
                   name: 'Update Kubernetes with the latest configs'
                   command: |
-                      kubectl apply -f k8s
+                      echo "$DO_CLUSTER_CERTIFICATE" | base64 --decode > cert.crt
+                      kubectl --kubeconfig=/dev/null --server=$DO_SERVER --certificate-authority=cert.crt --token=$DO_SERVICE_ACCOUNT_TOKEN apply -f ./k8s
             - run:
                   name: 'Update pods with the latest image versions'
                   command: |
