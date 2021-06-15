@@ -204,7 +204,6 @@ CREATE TABLE account_activation_tokens (
   account_id int unsigned NOT NULL DEFAULT 0,
   activation_token char(64) NOT NULL DEFAULT '',
   is_used tinyint(1) NOT NULL DEFAULT 0,
-  last_sent_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
