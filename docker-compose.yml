@@ -18,6 +18,7 @@ services:
             context: ./backup/
         container_name: blackblade-backup
         environment:
+            - ENVIRONMENT=${ENVIRONMENT:?err}
             - DB_HOST=${DB_HOST:?err}
             - DB_USERNAME=${DB_USERNAME:?err}
             - DB_PASSWORD=${DB_PASSWORD:?err}
