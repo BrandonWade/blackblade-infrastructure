@@ -12,6 +12,14 @@ services:
         environment:
             - MYSQL_ROOT_PASSWORD=root
             - MYSQL_DATABASE=blackblade
+    backup:
+        build:
+            dockerfile: Dockerfile.dev
+            context: ./backup/
+        container_name: blackblade-backup
+        environment:
+            - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID?:err}
+            - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY?:err}
 
 networks:
     default:

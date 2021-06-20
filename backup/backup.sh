@@ -1,9 +1,10 @@
 #!/bin/bash
 
 echo "db backup"
-TSTAMP=$(date +"%Y%d%m")
+TODAY=$(date +"%Y%m%d")
 
-mysqldump -uroot -proot -hblackblade-db blackblade | gzip > "$TSTAMP.sql.gz"
+# Dump the db and compress the resulting file
+mysqldump -uroot -proot -hblackblade-db blackblade | gzip > "$TODAY.sql.gz"
 
 # To unzip a backup
-# gzip -dk "$TSTAMP.sql.gz"
+# gzip -dk "$TODAY.sql.gz"

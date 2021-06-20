@@ -1,0 +1,15 @@
+{
+    "Rules": [
+        {
+            "ID": "Delete expired files",
+            "Status": "Enabled",
+            "Prefix": "",
+            "Expiration": {
+                "Days": 60
+            },
+            "AbortIncompleteMultipartUpload": {
+                "DaysAfterInitiation": 1
+            }
+        }
+    ]
+}
