@@ -35,7 +35,10 @@ spec:
                       - name: MYSQL_DATABASE
                         value: blackblade
                       - name: MYSQL_USER
-                        value: blackblade
+                        valueFrom:
+                            secretKeyRef:
+                                name: mysqluser
+                                key: MYSQL_USER
                       - name: MYSQL_PASSWORD
                         valueFrom:
                             secretKeyRef:
