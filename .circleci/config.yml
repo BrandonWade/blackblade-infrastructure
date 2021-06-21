@@ -33,8 +33,11 @@ jobs:
                   command: |
                       echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
                       docker build -t brandonwade/blackblade-db:latest -t brandonwade/blackblade-db:$CIRCLE_SHA1 -f ./database/Dockerfile ./database
+                      docker build -t brandonwade/blackblade-backup:latest -t brandonwade/blackblade-backup:$CIRCLE_SHA1 -f ./backup/Dockerfile ./backup
                       docker push brandonwade/blackblade-db:latest
                       docker push brandonwade/blackblade-db:$CIRCLE_SHA1
+                      docker push brandonwade/blackblade-backup:latest
+                      docker push brandonwade/blackblade-backup:$CIRCLE_SHA1
     deploy:
         executor: digitalocean/default
         steps:
@@ -54,3 +57,4 @@ jobs:
                   name: 'Update pods with the latest image versions'
                   command: |
                       kubectl set image deployments/db-deployment blackblade-db=brandonwade/blackblade-db:$CIRCLE_SHA1
+                      kubectl set image cronjobs/backup-cronjob blackblade-backup=brandonwade/blackblade-backup:$CIRCLE_SHA1
