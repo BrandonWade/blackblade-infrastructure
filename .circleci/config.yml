@@ -3,6 +3,7 @@ version: 2.1
 orbs:
     digitalocean: digitalocean/cli@0.1.1
     kubernetes: digitalocean/k8s@0.1.1
+    awscli: circleci/aws-cli@2.0
 
 workflows:
     build_and_deploy:
@@ -45,10 +46,11 @@ jobs:
             - kubernetes/install
             - kubernetes/initialize:
                   cluster: $DO_CLUSTER_NAME
+            - awscli/setup
             - run:
                   name: 'Update Digital Ocean Space lifecycle rules'
                   command: |
-                      aws s3api put-bucket-lifecycle-configuration --bucket $DO_SPACE_NAME --lifecycle-configuration file://rules.json --endpoint=https://$DO_SPACE_ENDPOINT
+                      aws s3api put-bucket-lifecycle-configuration --bucket=$DO_SPACE_NAME --lifecycle-configuration=file://backup/rules.json --endpoint=https://$DO_SPACE_ENDPOINT
             - run:
                   name: 'Set up Digital Ocean cluster configs'
                   command: |
