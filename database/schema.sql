@@ -187,7 +187,7 @@ CREATE TABLE types (
 
 DROP TABLE IF EXISTS accounts;
 CREATE TABLE accounts (
-  id int unsigned NOT NULL AUTO_INCREMENT,
+  id bigint unsigned NOT NULL AUTO_INCREMENT,
   public_id char(16) NOT NULL DEFAULT '',
   email varchar(256) NOT NULL DEFAULT '',
   password_hash varbinary(64) NOT NULL DEFAULT '',
@@ -200,8 +200,8 @@ CREATE TABLE accounts (
 
 DROP TABLE IF EXISTS account_activation_tokens;
 CREATE TABLE account_activation_tokens (
-  id int unsigned NOT NULL AUTO_INCREMENT,
-  account_id int unsigned NOT NULL DEFAULT 0,
+  id bigint unsigned NOT NULL AUTO_INCREMENT,
+  account_id bigint unsigned NOT NULL DEFAULT 0,
   activation_token char(64) NOT NULL DEFAULT '',
   is_used tinyint(1) NOT NULL DEFAULT 0,
   created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -213,8 +213,8 @@ CREATE TABLE account_activation_tokens (
 
 DROP TABLE IF EXISTS account_password_reset_tokens;
 CREATE TABLE account_password_reset_tokens (
-  id int unsigned NOT NULL AUTO_INCREMENT,
-  account_id int unsigned NOT NULL DEFAULT 0,
+  id bigint unsigned NOT NULL AUTO_INCREMENT,
+  account_id bigint unsigned NOT NULL DEFAULT 0,
   reset_token char(64) NOT NULL DEFAULT '',
   status enum('pending', 'used', 'disabled') NOT NULL DEFAULT 'pending',
   expires_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -223,4 +223,24 @@ CREATE TABLE account_password_reset_tokens (
   PRIMARY KEY (id),
   UNIQUE KEY U_reset_token (reset_token),
   FOREIGN KEY (account_id) REFERENCES accounts(id)
+) CHARSET=utf8mb4;
+
+DROP TABLE IF EXISTS bookmarks;
+CREATE TABLE bookmarks (
+    id bigint unsigned NOT NULL AUTO_INCREMENT,
+    card_id bigint unsigned NOT NULL DEFAULT 0,
+    account_id bigint unsigned NOT NULL DEFAULT 0,
+    PRIMARY KEY (id),
+    UNIQUE KEY U_card_id_account_id (card_id, account_id),
+    FOREIGN KEY (card_id) REFERENCES cards(id),
+    FOREIGN KEY (account_id) REFERENCES accounts(id)
+) CHARSET=utf8mb4;
+
+DROP TABLE IF EXISTS bookmark_tags;
+CREATE TABLE bookmark_tags (
+    id bigint unsigned NOT NULL AUTO_INCREMENT,
+    bookmark_id bigint unsigned NOT NULL DEFAULT 0,
+    text varchar(64) NOT NULL DEFAULT '',
+    PRIMARY KEY (id),
+    FOREIGN KEY (bookmark_id) REFERENCES bookmarks(id)
 ) CHARSET=utf8mb4;
