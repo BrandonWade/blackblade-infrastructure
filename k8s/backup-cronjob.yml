@@ -4,6 +4,7 @@ metadata:
     name: backup-cronjob
 spec:
     schedule: '0 1 */3 * *'
+    successfulJobsHistoryLimit: 0
     jobTemplate:
         spec:
             template:
