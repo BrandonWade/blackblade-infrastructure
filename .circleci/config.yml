@@ -6,7 +6,7 @@ orbs:
     awscli: circleci/aws-cli@2.0
 
 workflows:
-    build_and_deploy:
+    production:
         jobs:
             - build:
                   context:
@@ -15,9 +15,17 @@ workflows:
                       branches:
                           only:
                               - master
-            - deploy:
+            - approve:
                   requires:
                       - build
+                  type: approval
+                  filters:
+                      branches:
+                          only:
+                              - master
+            - deploy:
+                  requires:
+                      - approve
                   context:
                       - blackblade
                   filters:
