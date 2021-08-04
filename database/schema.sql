@@ -163,7 +163,7 @@ CREATE TABLE deck_cards (
     selection_type enum('automatic', 'manual') NOT NULL DEFAULT 'automatic',
     PRIMARY KEY (id),
     UNIQUE KEY U_deck_id_card_id_location (deck_id, card_id, location),
-    FOREIGN KEY (deck_id) REFERENCES decks(id),
+    FOREIGN KEY (deck_id) REFERENCES decks(id) ON DELETE CASCADE,
     FOREIGN KEY (card_id) REFERENCES cards(id)
 ) CHARSET=utf8mb4;
 
@@ -208,7 +208,7 @@ CREATE TABLE account_activation_tokens (
   updated_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
   UNIQUE KEY U_activation_token (activation_token),
-  FOREIGN KEY (account_id) REFERENCES accounts(id)
+  FOREIGN KEY (account_id) REFERENCES accounts(id) ON DELETE CASCADE
 ) CHARSET=utf8mb4;
 
 DROP TABLE IF EXISTS account_password_reset_tokens;
@@ -222,7 +222,7 @@ CREATE TABLE account_password_reset_tokens (
   updated_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
   UNIQUE KEY U_reset_token (reset_token),
-  FOREIGN KEY (account_id) REFERENCES accounts(id)
+  FOREIGN KEY (account_id) REFERENCES accounts(id) ON DELETE CASCADE
 ) CHARSET=utf8mb4;
 
 DROP TABLE IF EXISTS bookmarks;
@@ -242,5 +242,5 @@ CREATE TABLE bookmark_tags (
     bookmark_id bigint unsigned NOT NULL DEFAULT 0,
     text varchar(64) NOT NULL DEFAULT '',
     PRIMARY KEY (id),
-    FOREIGN KEY (bookmark_id) REFERENCES bookmarks(id)
+    FOREIGN KEY (bookmark_id) REFERENCES bookmarks(id) ON DELETE CASCADE
 ) CHARSET=utf8mb4;
