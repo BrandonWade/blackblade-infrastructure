@@ -61,5 +61,3 @@ spec:
                                         name: awssecretaccesskey
                                         key: AWS_SECRET_ACCESS_KEY
                     restartPolicy: OnFailure
-                    imagePullSecrets:
-                        - name: regcred
