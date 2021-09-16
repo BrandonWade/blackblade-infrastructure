@@ -237,12 +237,3 @@ CREATE TABLE bookmarks (
     FOREIGN KEY (card_id) REFERENCES cards(id),
     FOREIGN KEY (account_id) REFERENCES accounts(id)
 ) CHARSET=utf8mb4;
-
-DROP TABLE IF EXISTS bookmark_tags;
-CREATE TABLE bookmark_tags (
-    id bigint unsigned NOT NULL AUTO_INCREMENT,
-    bookmark_id bigint unsigned NOT NULL DEFAULT 0,
-    text varchar(64) NOT NULL DEFAULT '',
-    PRIMARY KEY (id),
-    FOREIGN KEY (bookmark_id) REFERENCES bookmarks(id) ON DELETE CASCADE
-) CHARSET=utf8mb4;
