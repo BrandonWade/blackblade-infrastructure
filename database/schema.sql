@@ -151,6 +151,7 @@ CREATE TABLE decks (
     deck_size int unsigned NOT NULL DEFAULT 0,
     maybeboard_size int unsigned NOT NULL DEFAULT 0,
     colors varchar(22) NOT NULL DEFAULT '',
+    last_updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
     UNIQUE KEY U_public_id (public_id)
 ) CHARSET=utf8mb4;
