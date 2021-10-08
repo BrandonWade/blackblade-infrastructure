@@ -81,7 +81,7 @@ CREATE TABLE card_multiverse_ids (
     PRIMARY KEY (id),
     UNIQUE KEY U_multiverse_id (multiverse_id),
     UNIQUE KEY U_card_id_multiverse_id (card_id, multiverse_id),
-    FOREIGN KEY (card_id) REFERENCES cards(id)
+    FOREIGN KEY (card_id) REFERENCES cards(id) ON DELETE CASCADE
 ) CHARSET=utf8mb4;
 
 DROP TABLE IF EXISTS card_frame_effects;
@@ -91,7 +91,7 @@ CREATE TABLE card_frame_effects (
     frame_effect varchar(32) NOT NULL DEFAULT '',
     PRIMARY KEY (id),
     UNIQUE KEY U_card_id_frame_effect (card_id, frame_effect),
-    FOREIGN KEY (card_id) REFERENCES cards(id)
+    FOREIGN KEY (card_id) REFERENCES cards(id) ON DELETE CASCADE
 ) CHARSET=utf8mb4;
 
 DROP TABLE IF EXISTS card_prices;
@@ -104,7 +104,7 @@ CREATE TABLE card_prices (
     tix varchar(16) NOT NULL DEFAULT '',
     PRIMARY KEY (id),
     UNIQUE KEY U_card_id (card_id),
-    FOREIGN KEY (card_id) REFERENCES cards(id)
+    FOREIGN KEY (card_id) REFERENCES cards(id) ON DELETE CASCADE
 ) CHARSET=utf8mb4;
 
 DROP TABLE IF EXISTS card_faces;
@@ -137,7 +137,7 @@ CREATE TABLE card_faces (
     watermark varchar(32) NOT NULL DEFAULT '',
     PRIMARY KEY (id),
     UNIQUE KEY U_card_id_face_index (card_id, face_index),
-    FOREIGN KEY (card_id) REFERENCES cards(id)
+    FOREIGN KEY (card_id) REFERENCES cards(id) ON DELETE CASCADE
 ) CHARSET=utf8mb4;
 
 DROP TABLE IF EXISTS decks;
@@ -167,7 +167,7 @@ CREATE TABLE deck_cards (
     PRIMARY KEY (id),
     UNIQUE KEY U_deck_id_card_id_location (deck_id, card_id, location),
     FOREIGN KEY (deck_id) REFERENCES decks(id) ON DELETE CASCADE,
-    FOREIGN KEY (card_id) REFERENCES cards(id)
+    FOREIGN KEY (card_id) REFERENCES cards(id) ON DELETE CASCADE
 ) CHARSET=utf8mb4;
 
 DROP TABLE IF EXISTS sets;
@@ -235,6 +235,6 @@ CREATE TABLE bookmarks (
     account_id bigint unsigned NOT NULL DEFAULT 0,
     PRIMARY KEY (id),
     UNIQUE KEY U_card_id_account_id (card_id, account_id),
-    FOREIGN KEY (card_id) REFERENCES cards(id),
-    FOREIGN KEY (account_id) REFERENCES accounts(id)
+    FOREIGN KEY (card_id) REFERENCES cards(id) ON DELETE CASCADE,
+    FOREIGN KEY (account_id) REFERENCES accounts(id) ON DELETE CASCADE
 ) CHARSET=utf8mb4;
