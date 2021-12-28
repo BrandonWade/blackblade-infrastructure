@@ -4,3 +4,4 @@ WORKDIR /docker-entrypoint-initdb.d
 COPY ./config.cnf /etc/mysql/conf.d
 
 COPY ./schema.sql .
+COPY ./seed.sql .
