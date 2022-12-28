@@ -176,8 +176,7 @@ CREATE TABLE sets (
     set_code varchar(8) NOT NULL DEFAULT '',
     set_name varchar(64) NOT NULL DEFAULT '',
     PRIMARY KEY (id),
-    UNIQUE KEY U_set_code (set_code),
-    UNIQUE KEY U_set_name (set_name)
+    UNIQUE KEY U_set_code_set_name (set_code, set_name)
 ) CHARSET=utf8mb4;
 
 DROP TABLE IF EXISTS types;
