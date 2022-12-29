@@ -56,7 +56,6 @@ CREATE TABLE cards (
     is_oversized tinyint(1) NOT NULL DEFAULT 0,
     is_reserved tinyint(1) NOT NULL DEFAULT 0,
     is_booster tinyint(1) NOT NULL DEFAULT 0,
-    is_digital_only tinyint(1) NOT NULL DEFAULT 0,
     is_full_art tinyint(1) NOT NULL DEFAULT 0,
     is_textless tinyint(1) NOT NULL DEFAULT 0,
     is_reprint tinyint(1) NOT NULL DEFAULT 0,
