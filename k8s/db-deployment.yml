@@ -19,13 +19,6 @@ spec:
             containers:
                 - name: blackblade-db
                   image: brandonwade/blackblade-db:latest
-                  resources:
-                      requests:
-                          memory: '400Mi'
-                          cpu: '150m'
-                      limits:
-                          memory: '1200Mi'
-                          cpu: '800m'
                   args:
                       - '--sql-mode='
                   ports:
